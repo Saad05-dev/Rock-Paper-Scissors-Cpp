@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 int numberOfRounds()
@@ -20,6 +21,16 @@ enum gameChoice
     Scissor = 3
 };
 
+gameChoice choiceConvert(int choice)
+{
+    if (choice == 1)
+        return gameChoice::Rock;
+    else if(choice == 2)
+        return gameChoice::Paper;
+    else
+        return gameChoice::Scissor;
+}
+
 gameChoice playerChoice()
 {
     string play = "";
@@ -36,19 +47,24 @@ gameChoice playerChoice()
         isInvalid = N <= 0 || N > 3;
     } while ( isInvalid );
 
-    if (N == 1)
-        return gameChoice::Rock;
-    else if(N == 2)
-        return gameChoice::Paper;
-    else
-        return gameChoice::Scissor;
+    return choiceConvert(N);
+}
+
+gameChoice computerChoice()
+{
+    int choice = rand() % 3 + 1;
+    
+    return choiceConvert(choice);
 }
 
 int main()
 {
+    srand((unsigned)time(NULL));
 
     numberOfRounds();
-    cout << playerChoice();
+    cout << playerChoice() << endl;
+    cout << computerChoice() << endl;
+
 
     return 0;
 }
